@@ -1,9 +1,12 @@
 package project_2;
 
+import java.util.LinkedList;
+
 public class HuffmanNode implements Comparable <HuffmanNode>{
 	public byte b ;
 	public int count; //the number of times the node appears in the file
 	public boolean[] code;
+	public LinkedList<Byte> allChildren = new LinkedList<Byte>();
 	public HuffmanNode next; //do I need this
 	public HuffmanNode left;
 	public HuffmanNode right;
@@ -14,12 +17,14 @@ public class HuffmanNode implements Comparable <HuffmanNode>{
 		left = leftSubChild;
 		right = rightSubChild;
 		count = count + left.count + right.count;
+		allChildren.add(nodeData);
 	}
 	
 	public HuffmanNode(byte nodeData, int nodeCount){
 		b = nodeData;
 		code = findCode(b);
 		count = nodeCount;
+		allChildren.add(nodeData);
 	}
 	
 	public static boolean[] findCode(byte b){ //returns boolean[] array representation of the byte

@@ -25,10 +25,9 @@ public class HuffmanCodeFundTest {
      */
 	
 	@Test
-	public void testByteArrayArgumentConstructor() {
-    	HuffmanCode hc = new HuffmanCode(new byte [] {(byte)'a', (byte)'b'});
-    	assertTrue("The constructor make a HuffmanCode using byte array",
-			true);
+	public void testByteArrayArgumentConstructorAndCode() {
+    	HuffmanCode hc = new HuffmanCode(new byte [] {(byte)'a', (byte)'b', (byte)'a', (byte)'c', (byte)'b', (byte)'d', (byte)'c', (byte)'b'});
+    	assertEquals("The constructor make a HuffmanCode using byte array",hc.code((byte)'b'), new boolean[] {false, true});
 	}
 	
 	@Test
