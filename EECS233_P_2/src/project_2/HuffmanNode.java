@@ -2,26 +2,35 @@ package project_2;
 
 import java.util.LinkedList;
 
-public class HuffmanNode implements Comparable <HuffmanNode>{
-	public byte b ;
+public class HuffmanNode  implements Comparable <HuffmanNode>{
+	public byte b;
 	public int count; //the number of times the node appears in the file
-	public boolean[] code;
+	public boolean[] code = new boolean[8];
 	public LinkedList<Byte> allChildren = new LinkedList<Byte>();
-	public HuffmanNode next; //do I need this
-	public HuffmanNode left;
-	public HuffmanNode right;
+	public HuffmanNode next = null; 
+	public HuffmanNode left = null;
+	public HuffmanNode right = null;
 	
 	public HuffmanNode(byte nodeData, int nodeCount, HuffmanNode leftSubChild, HuffmanNode rightSubChild){
-		b = nodeData;
-		code = findCode(b);
-		left = leftSubChild;
-		right = rightSubChild;
-		count = count + left.count + right.count;
-		allChildren.add(nodeData);
+		if(leftSubChild == null || rightSubChild == null){
+			b = nodeData;
+			code = findCode(b);
+			count = nodeCount;
+			allChildren.add(nodeData);
+		}	else{
+				b = nodeData;
+				code = findCode(b);
+				left = leftSubChild;
+				right = rightSubChild;
+				count = count + left.count + right.count;
+				allChildren.add(nodeData);
+			}
 	}
 	
 	public HuffmanNode(byte nodeData, int nodeCount){
 		b = nodeData;
+		left = null;
+		right = null;
 		code = findCode(b);
 		count = nodeCount;
 		allChildren.add(nodeData);
@@ -44,15 +53,39 @@ public class HuffmanNode implements Comparable <HuffmanNode>{
 		
 		return bCode;
 	}
+	
+	public LinkedList<Byte> getAllChildren(){
+		if(left == null && right == null)
+			return allChildren;
+		LinkedList<Byte> temp = left.getAllChildren();
+		temp.addAll(right.getAllChildren());
+		return temp;
+		
+	}
+	
+	public boolean hasChildren(){
+		try{
+			return left != null && right != null;
+		}catch(NullPointerException e){
+			return false;
+		}
+	}
 
 	@Override
 	public int compareTo(HuffmanNode h2) {
-		if(this.count == h2.count)
-			return 0;
+		if(this.count > h2.count) //compares count first then compares bytes
+			return 1;
 		else
 			if(this.count < h2.count)
 				return -1;
-			else
-				return 1;
+				else
+					if(this.b > h2.b) //secondary comparison of the bytes
+						return 1;
+					else
+						if(this.b < h2.b)
+							return -1;
+						else 
+							return 0; //if the byte and count are the same
 	}
+
 }

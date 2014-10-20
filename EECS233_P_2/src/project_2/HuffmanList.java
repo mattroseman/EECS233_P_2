@@ -46,8 +46,11 @@ public class HuffmanList { //constructs the linkedlist of HuffmanNodes from the 
 				if(byteArr[i] == byteArr[j])
 					throw new IllegalArgumentException("Duplicate Byte Exception");
 			}
+	
 			list.add(new HuffmanNode(byteArr[i], countArr[i]));
 		}
+		orderListCountInc();
+		
 	}
 	
 	public void orderListCountInc(){
@@ -64,11 +67,15 @@ public class HuffmanList { //constructs the linkedlist of HuffmanNodes from the 
 		orderListCountInc();
 	}
 	
+	public HuffmanNode get(int index){
+		return list.get(index);
+	}
+	
 	public int size(){
 		return list.size();
 	}
 	
-	public Iterator iterator(){
+	public Iterator<HuffmanNode> iterator(){
 		return list.iterator();
 	}
 }
